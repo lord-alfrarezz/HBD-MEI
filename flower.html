@@ -129,7 +129,7 @@
         /* Tipe Kertas Gulung / Surat Klasik */
         .scroll-paper {
             background: #fff8e7; /* Warna kertas kuno/vintage hangat */
-            padding: 40px 30px;
+            padding: 35px 25px 25px 25px;
             border-radius: 4px; /* Sudut tajam khas kertas */
             width: 85%;
             max-width: 420px;
@@ -144,6 +144,9 @@
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             font-family: 'Georgia', serif; /* Font bergaya surat klasik */
+            display: flex;
+            flex-direction: column;
+            max-height: 80vh; /* Membatasi tinggi kertas agar tidak melebihi layar hp/pc */
         }
 
         .letter-modal.open .scroll-paper {
@@ -154,27 +157,61 @@
         .scroll-paper h2 {
             color: #8c6239;
             margin-top: 0;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             border-bottom: 1px dashed #deaf80;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             font-style: italic;
+            margin-bottom: 5px;
+            flex-shrink: 0; /* Menjaga judul tidak mengecil */
+        }
+
+        /* --- BAGIAN SCROLL KONTEN SURAT --- */
+        .scroll-content {
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            text-align: justify; /* MENGUBAH TULISAN MENJADI RATA KANAN KIRI */
+            /* Kustomisasi scrollbar untuk browser Webkit (Chrome, Safari, Edge) */
+        }
+
+        .scroll-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-content::-webkit-scrollbar-track {
+            background: rgba(222, 175, 128, 0.2);
+            border-radius: 10px;
+        }
+
+        .scroll-content::-webkit-scrollbar-thumb {
+            background: #deaf80;
+            border-radius: 10px;
+        }
+
+        .scroll-content::-webkit-scrollbar-thumb:hover {
+            background: #8c6239;
+        }
+
+        /* Kustomisasi scrollbar untuk Firefox */
+        .scroll-content {
+            scrollbar-width: thin;
+            scrollbar-color: #deaf80 rgba(222, 175, 128, 0.2);
         }
 
         .scroll-paper p {
             color: #5c4033;
             line-height: 1.8;
             font-size: 1rem;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            white-space: pre-line;
-            text-align: left; /* Teks rata kiri agar rapi seperti surat asli */
+            margin: 0;
+            white-space: pre-line; /* Menjaga spasi enter bawaan teks */
         }
 
         .close-scroll-btn {
             background: #8c6239;
             color: #fff8e7;
             border: none;
-            padding: 10px 30px;
+            padding: 12px 30px;
             font-family: 'Segoe UI', sans-serif;
             font-size: 0.9rem;
             font-weight: bold;
@@ -183,6 +220,9 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: all 0.3s;
+            flex-shrink: 0; /* Menjaga tombol tidak terpotong */
+            margin-top: auto;
+            border-radius: 4px;
         }
 
         .close-scroll-btn:hover {
@@ -194,7 +234,6 @@
 <body class="container">
     <div class="night"></div>
 
-    <!-- Sisi Kanan: Elemen Surat Jatuh -->
     <div class="envelope-container envelope-fall" id="envelopeContainer" onclick="openLetter()">
         <div class="envelope">
             <div class="heart-seal">❤️</div>
@@ -202,22 +241,21 @@
         <div class="tap-hint">Tap Suratnya ✨</div>
     </div>
 
-    <!-- Tipe Baru: Modal Kertas Gulung Vintage -->
     <div class="letter-modal" id="letterModal">
         <div class="scroll-paper">
             <h2>Special Message Buat cewek yang suka melet hehehe ✉️</h2>
-            <p id="letterMessage">Hai Mei Selamat ulang tahun ya. 🌸
+            
+            <div class="scroll-content">
+                <p id="letterMessage">Hai Mei Selamat ulang tahun ya. 🌸
 
 Semoga di usiamu yang baru ini, kebahagiaan selalu menyertaimu, urusannya dipermudah, dan senyuman indah itu nggak pernah hilang dari wajahmu. 
 
-Mei jujur aku orangnya penuh keraguan dan pertimbangan, tapi entah kenapa aku kayak dak mau ada penyesalan maaf yo kalo aku kesan nyo aneh dan kayak nangugung.
-aku jugo bingung caro ngungkapin nyo ntah kenapo aku kayak stuck bae rasony. mungkin ini yang terakhir karna akupun takut kau risih jugo sih.
-ini aku buatnyo jugo di penghujung ultah kau, aku dak bakal kirim ini kalo dk ado pemicu ny yh mungkin, tapi aku buat ini mungkin aku berharap sih.
+Ini mungkin yang terakhir tapi aku ada pertanyaan kalo seandainya kapan-kapan aku ngajak kau jalan atau main boleh dak hehehe. 
+Mungkin dak beduo bae sih, nadhif jugo kadang rindu sih main dengan kalian. buat sekedar ngobrol dan main, tapi kalo beudo bae kalo kau mau kapan kapan aku jugo mau, aku nggak maksa kau itu pun dengan persetujuan kau. Mei kadang aku rindu dengan kau ngechat takut ganggu kau, aku pun jugo dak tau mau chat apo tapi yah udh lh.
 
-tapi yang lebih penting selamat ulang tahun mei aku dk tau ujungny bakal kek mano tapi kalo mau denger kata hati aku, aku mau kenal dengan kau lebih jauh lagi.
-mungkin dak sekarang, yahhh ak tau jugo buat ap dan berapo lamo lagi, itu yang bikin aneh kan. ahh ak dak tau aku mau ngomong apo boleh dak kapan kapan aku ngajak kau jalan
-atau main, jujur aku agak takutan sih bakal kek mno hahhaa klo dk bileh pun dpp jugo mei dengan adony pemicu ak ngiirim ini bae ak dh seneng ak tau ultah kau tanggal 21
-tapi aku ngirim nyo kapan aku dak tau sih cuman aku berharap ak ngirim sih, kalo kau meraso terganggu maaf yo mei </p>
+Yang lebih penting selamat ulang tahun mei aku bakal seneng dengan kabar gembira sekecil apapun dari kau, aku jugo seneng kalo kau mau curhat atau sekedar ngobrol bae dengan aku hehehe</p>
+            </div>
+
             <button class="close-scroll-btn" onclick="closeLetter()">Close</button>
         </div>
     </div>
@@ -519,13 +557,13 @@ tapi aku ngirim nyo kapan aku dak tau sih cuman aku berharap ak ngirim sih, kalo
       </div>
     </div>
 
-    <!-- UTILITY LOGIC SCRIPT -->
     <script>
         function openLetter() {
             document.getElementById('letterModal').classList.add('open');
         }
 
         function closeLetter() {
+            document.getElementById('letterModal').classList.remove('remove'); // Note: Seharusnya 'open' untuk menghapus kelas open
             document.getElementById('letterModal').classList.remove('open');
         }
     </script>
