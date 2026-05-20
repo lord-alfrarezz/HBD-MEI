@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD Surprise!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            transition: background-color 0.8s ease;
+        }
+
+        /* Efek Hati Melayang di Background */
+        .heart-bg {
+            position: absolute;
+            color: rgba(244, 143, 177, 0.5);
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: float 4s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+            max-width: 320px;
+            width: 85%;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+
+        .gif-display {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-tap {
+            width: 90px;
+            height: 90px;
+            background-color: #f48fb1;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(244, 143, 177, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            /* Efek berdenyut agar menarik untuk di-klik */
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 143, 177, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(244, 143, 177, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(244, 143, 177, 0); }
+        }
+
+        .btn-tap:hover {
+            background-color: #ad1457;
+            transform: scale(1.1);
+            animation: none;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="card page active fade-in">
+        <h1>Happy Birthday! 🎂</h1>
+        <img src="https://media.tenor.com/h4gJajgeNZUAAAAi/bday.gif" class="gif-display">
+        <br>
+        <button class="btn-tap" onclick="showPage(2)">Tap Me</button>
+    </div>
+
+    <div id="page2" class="card page">
+        <h1>Yeeayyy! Happy ! ✨</h1>
+        <img src="https://media.tenor.com/DmLXGbELO60AAAAm/bubu-dudu-bubu-dudu-happy.webp" class="gif-display">
+        <p style="color: #ad1457; font-weight: bold;">Panjang umur yahh buat kamu</p>
+        <button class="btn-tap" onclick="showPage(3)">Next</button>
+    </div>
+
+    <div id="page3" class="card page">
+        <h1>Let's Dance! 💃</h1>
+        <img src="https://media.tenor.com/JStJlLTa44YAAAAm/dudu-bubu-dancing-dancung.webp" class="gif-display">
+        <p style="color: #ad1457; font-weight: bold;">Bahagia selalu ya!<br>(≧∇≦)</p>
+        <button class="btn-tap" onclick="showPage(4)">Tap Again</button>
+    </div>
+
+    <div id="page4" class="card page">
+        <h1>Special for You 🌸</h1>
+        <img src="https://media.tenor.com/arLtVbLvu10AAAAm/bubu-dudu-sseeyall.webp" class="gif-display">
+        <p style="color: #ad1457; font-weight: bold;">Semoga setiap doamu hari ini dikabulkan oleh cara yang indah. ^_^</p>
+        <button class="btn-tap" onclick="showPage(5)">Tap</button>
+    </div>
+
+    <!-- Halaman Kelima dengan Tombol yang Langsung Menuju flower.html -->
+    <div id="page5" class="card page">
+        <h1>See You! 👋</h1>
+        <img src="https://media.tenor.com/RhdwDUpRXeMAAAAm/bubu-dudu-sseeyall.webp" class="gif-display">
+        <p style="color: #ad1457; font-weight: bold; font-size: 1.2rem;">Semoga kamu senang dengan kado kecilku yahh! ≧﹏≦</p>
+        <button class="btn-tap" onclick="goToFlower()">Last Tap</button>
+    </div>
+
+    <script>
+        // Membuat efek hati melayang secara otomatis
+        function createHeart() {
+            const heart = document.createElement('div');
+            const hearts = ['❤️', '💖', '🌸', '✨'];
+            heart.classList.add('heart-bg');
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 4000);
+        }
+        setInterval(createHeart, 500);
+
+        // Fungsi navigasi halaman 1 sampai 5
+        function showPage(pageNumber) {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#f48fb1', '#ffc107', '#ffffff']
+            });
+
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active', 'fade-in'));
+
+            const targetPage = document.getElementById('page' + pageNumber);
+            targetPage.classList.add('active', 'fade-in');
+
+            const colors = ["#fce4ec", "#f8bbd0", "#f48fb1", "#f06292", "#ec407a"];
+            document.body.style.backgroundColor = colors[pageNumber - 1];
+        }
+
+        // Fungsi khusus tombol di page 5 untuk langsung pindah ke flower.html
+        function goToFlower() {
+            window.location.href = 'flower.html';
+        }
+    </script>
+</body>
+</html>
